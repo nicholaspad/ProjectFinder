@@ -10,3 +10,8 @@ app.secret_key = b"insecure-key"
 def hello():
     netid = CASClient().authenticate()
     return netid
+
+
+@app.route("/logout")
+def logout():
+    CASClient().logout()
