@@ -5,6 +5,7 @@ from CASClient import CASClient
 from database import db
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "abcdefg1234567"
 app.config["TIMEZONE"] = timezone("US/Eastern")
 
 
