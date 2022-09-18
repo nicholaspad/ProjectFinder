@@ -1,4 +1,4 @@
 if __name__ == "__main__":
-    from app import db
+    from database import init_db
 
-    db.create_all()
+    init_db()
