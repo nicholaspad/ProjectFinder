@@ -12,9 +12,9 @@ class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     netid = Column(String(20), unique=True, nullable=False)
-    first_name = Column(String(50), unique=False, nullable=True)
-    last_name = Column(String(50), unique=False, nullable=True)
-    email = Column(String(50), unique=True)
+    first_name = Column(String(50), default="", unique=False, nullable=True)
+    last_name = Column(String(50), default="", unique=False, nullable=True)
+    email = Column(String(50), default="", unique=True)
     entry = relationship("Entry", backref="user", uselist=False)
 
     def __init__(self, netid):
