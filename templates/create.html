@@ -1,35 +1,39 @@
 <div class="d-flex justify-content-center">
-    <button type="button"
-            class="btn btn-primary mt-4 {% if not has_completed_settings or is_past_due %} disabled {% endif %}"
-            data-bs-toggle="modal"
-            data-bs-target="#entry-modal">
-        {% if has_created_entry %}
-        <i class="bi bi-pencil-fill me-1"></i>
-        {% else %}
-        <i class="bi bi-plus-circle-fill me-1"></i>
-        {% endif %}
-        {{ has_created_entry|yesno:"Edit,Create" }} Entry</button>
+  <button
+    type="button"
+    class="btn btn-primary mt-4 {% if not has_completed_settings or is_past_due %} disabled {% endif %}"
+    data-bs-toggle="modal"
+    data-bs-target="#entry-modal"
+  >
     {% if has_created_entry %}
-    <button id="entry-delete-button"
-            type="button"
-            class="btn btn-danger mt-4 ms-2 {% if is_past_due %} disabled {% endif %}">
-        <i class="bi bi-trash3-fill me-1"></i>
-        Delete Entry</button>
-    {% endif %}
+    <i class="bi bi-pencil-fill me-1"></i>
+    {% else %}
+    <i class="bi bi-plus-circle-fill me-1"></i>
+    {% endif %} {{ has_created_entry }} Entry
+  </button>
+  {% if has_created_entry %}
+  <button
+    id="entry-delete-button"
+    type="button"
+    class="btn btn-danger mt-4 ms-2 {% if is_past_due %} disabled {% endif %}"
+  >
+    <i class="bi bi-trash3-fill me-1"></i>
+    Delete Entry
+  </button>
+  {% endif %}
 </div>
 
 {% if is_past_due %}
 <div class="d-flex justify-content-center">
-    <p class="h6 text-center text-danger mt-3">You cannot
-        {{ has_created_entry|yesno:"edit/delete your,create an" }} entry because the due date
-        has passed.
-    </p>
+  <p class="h6 text-center text-danger mt-3">
+    You cannot {{ has_created_entry }} entry because the due date has passed.
+  </p>
 </div>
 {% elif not has_completed_settings %}
 <div class="d-flex justify-content-center">
-    <p class="h6 text-center text-danger mt-3">You cannot create an entry until you complete the
-        Settings form in the upper right!</p>
+  <p class="h6 text-center text-danger mt-3">
+    You cannot create an entry until you complete the Settings form in the upper
+    right!
+  </p>
 </div>
-{% endif %}
-
-{% include "modals/entry_modal.html" %}
+{% endif %} {% include "modals/entry_modal.html" %}
