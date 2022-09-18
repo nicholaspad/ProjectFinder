@@ -1,7 +1,9 @@
 from datetime import datetime
+from email.policy import default
 
 from pytz import timezone
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 from database import Base
 
@@ -13,6 +15,7 @@ class User(Base):
     first_name = Column(String(50), unique=False, nullable=True)
     last_name = Column(String(50), unique=False, nullable=True)
     email = Column(String(50), unique=True)
+    entry = relationship("Entry", backref="user", uselist=False)
 
     def __init__(self, netid):
         self.netid = netid
@@ -25,53 +28,25 @@ class User(Base):
 class Config(Base):
     __tablename__ = "config"
     id = Column(Integer, primary_key=True)
-    due_date = Column(DateTime, nullable=False)
-
-    def __init__(self):
-        self.due_date = datetime.now(tz=timezone("US/Eastern"))
+    due_date = Column(
+        DateTime, nullable=False, default=datetime.now(tz=timezone("US/Eastern"))
+    )
 
     def __repr__(self):
         return f"<Config due_date={self.due_date!r}>"
 
 
-# class Config(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     # Due date (Eastern Time) for ProjectFinder entry
-#     due_date = db.Column(db.DateTime)
-#     created_date = db.Column(
-#         db.DateTime, default=datetime.now(tz=timezone("US/Eastern"))
-#     )
-
-
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     netid = db.Column(db.String(20), nullable=False, unique=True)
-#     first_name = db.Column(db.String(50), nullable=False)
-#     last_name = db.Column(db.String(50), nullable=False)
-#     email = db.Column(db.String(50), nullable=False)
-
-
-# class Entry(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     # user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-#     # author = db.relationship("User", backref=db.backref("entry", lazy=True))
-#     created_date = db.Column(
-#         db.DateTime, default=datetime.now(tz=timezone("US/Eastern"))
-#     )
-
-
-# class Entry(models.Model):
-#     author = models.OneToOneField(
-#         User, default=None, on_delete=models.CASCADE, related_name="entry"
-#     )
-#     created_date = models.DateTimeField(auto_now=True)
-#     last_modified_date = models.DateTimeField(auto_now=True)
-#     skills = models.TextField(
-#         default="",
-#         help_text="Comma-separated list of frameworks and technologies",
-#     )
-#     interests = models.TextField(
-#         default="", help_text="Statement of general project interests"
-#     )
-#     project_name = models.CharField(max_length=100, default="")
-#     project_description = models.TextField(default="")
+class Entry(Base):
+    __tablename__ = "entries"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    created_date = Column(
+        DateTime, nullable=False, default=datetime.now(tz=timezone("US/Eastern"))
+    )
+    last_modified_date = Column(
+        DateTime, nullable=False, default=datetime.now(tz=timezone("US/Eastern"))
+    )
+    skills = Column(String(500), nullable=False, default="")
+    interests = Column(String(500), nullable=False, default="")
+    project_name = Column(String(100), nullable=False, default="")
+    project_description = Column(String(500), nullable=False, default="")
