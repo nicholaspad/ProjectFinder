@@ -40,6 +40,7 @@ def index():
         "has_completed_settings": (
             user and user.email and user.first_name and user.last_name
         ),
+        "has_created_entry": user.entry is not None,
     }
 
     return render_template("index.html", **context)
