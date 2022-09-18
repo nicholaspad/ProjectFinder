@@ -32,6 +32,19 @@ def index():
         db.add(user)
         db.commit()
 
+    entries = Entry.query.all()
+    table_data = [
+        {
+            "name": f"{entry.user.first_name} {entry.user.last_name}",
+            "netid": entry.user.netid,
+            "skills": entry.skills.split(", "),
+            "interests": entry.interests,
+            "project_name": entry.project_name,
+            "project_description": entry.project_description,
+        }
+        for entry in entries
+    ]
+
     context = {
         "user": user,
         "config": Config.query.first(),
@@ -40,6 +53,7 @@ def index():
             user and user.email and user.first_name and user.last_name
         ),
         "has_created_entry": user.entry is not None,
+        "table_data": table_data,
     }
 
     return render_template("index.html", **context)
