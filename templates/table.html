@@ -1,0 +1,31 @@
+<div class="table-responsive my-4">
+    <table id="entry-table"
+           class="pf-entry-table table table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">NetID</th>
+                <th scope="col">Skills</th>
+                <th scope="col">Interests</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">Project Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table_data %}
+            <tr class="{% if row.netid == netid %} table-secondary {% endif %}">
+                <td>{{ row.name }}</td>
+                <td><code>{{ row.netid }}</code></td>
+                <td>
+                    {% for skill in row.skills %}
+                    <span class="badge rounded-pill bg-secondary">{{ skill }}</span>
+                    {% endfor %}
+                </td>
+                <td>{{ row.interests }}</td>
+                <td>{{ row.project_name }}</td>
+                <td>{{ row.project_description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

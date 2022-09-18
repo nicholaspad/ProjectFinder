@@ -1,0 +1,22 @@
+/* Navbar */
+.pf-navbar-items {
+  justify-content: end;
+}
+
+.pf-navbar-settings-entrypoint {
+  cursor: pointer;
+}
+
+/* Entry Table */
+
+.pf-entry-table {
+  margin-bottom: 0 !important;
+}
+
+/* Misc */
+
+@media (min-width: 768px) {
+  .main-content-padding {
+    padding: 0 4rem;
+  }
+}

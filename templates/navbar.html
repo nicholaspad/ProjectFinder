@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">
+            <img src="{/static/images/coffee-big.png"
+                 alt="Coffee logo"
+                 width="24"
+                 height="24"
+                 class="d-inline-block align-text-top me-1">
+            COS333 | ProjectFinder</span>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#pf-navbar"
+                aria-controls="pf-navbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="pf-navbar-items collapse navbar-collapse"
+             id="pf-navbar">
+            <div class="navbar-nav">
+                <!-- Controlled by JS -->
+                <a class="pf-navbar-settings-entrypoint nav-link me-2"
+                   data-bs-toggle="modal"
+                   data-bs-target="#settings-modal">Settings</a>
+                <a class="nav-link"
+                   href="/auth/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% include "modals/settings_modal.html" %}

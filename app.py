@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 from pytz import timezone
 
 from CASClient import CASClient
@@ -17,7 +18,7 @@ def shutdown_session(exception=None):
 @app.route("/")
 def index():
     netid = CASClient().authenticate()
-    return netid
+    return render_template("index.html")
 
 
 @app.route("/logout")
