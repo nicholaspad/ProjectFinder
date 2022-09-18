@@ -1,7 +1,22 @@
-from datetime import datetime
-from pytz import timezone
+from sqlalchemy import Column, Integer, String
 
-from app import db
+from database import Base
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True)
+    netid = Column(String(20), unique=True, nullable=False)
+    first_name = Column(String(50), unique=False, nullable=True)
+    last_name = Column(String(50), unique=False, nullable=True)
+    email = Column(String(50), unique=True)
+
+    def __init__(self, netid):
+        self.netid = netid
+        self.email = f"{netid}@princeton.edu"
+
+    def __repr__(self):
+        return f"<User {self.netid!r}>"
 
 
 # class Config(db.Model):
