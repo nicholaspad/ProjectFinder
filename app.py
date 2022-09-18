@@ -1,9 +1,11 @@
 from flask import Flask
+from pytz import timezone
 
 from CASClient import CASClient
 from database import db
 
 app = Flask(__name__)
+app.config["TIMEZONE"] = timezone("US/Eastern")
 
 
 @app.teardown_appcontext

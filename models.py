@@ -1,4 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from datetime import datetime
+
+from pytz import timezone
+from sqlalchemy import Column, DateTime, Integer, String
 
 from database import Base
 
@@ -16,7 +19,19 @@ class User(Base):
         self.email = f"{netid}@princeton.edu"
 
     def __repr__(self):
-        return f"<User {self.netid!r}>"
+        return f"<User netid={self.netid!r}>"
+
+
+class Config(Base):
+    __tablename__ = "config"
+    id = Column(Integer, primary_key=True)
+    due_date = Column(DateTime, nullable=False)
+
+    def __init__(self):
+        self.due_date = datetime.now(tz=timezone("US/Eastern"))
+
+    def __repr__(self):
+        return f"<Config due_date={self.due_date!r}>"
 
 
 # class Config(db.Model):
