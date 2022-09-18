@@ -33,7 +33,14 @@ def index():
         db.add(user)
         db.commit()
 
-    context = {"user": user, "config": Config.query.first(), "user_entry": user.entry}
+    context = {
+        "user": user,
+        "config": Config.query.first(),
+        "user_entry": user.entry,
+        "has_completed_settings": (
+            user and user.email and user.first_name and user.last_name
+        ),
+    }
 
     return render_template("index.html", **context)
 
