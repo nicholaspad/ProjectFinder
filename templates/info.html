@@ -27,7 +27,7 @@
                 <strong>Welcome to COS333!</strong>
                 ProjectFinder centralizes student interests and project ideas to assist with team
                 formation. Please create an entry by
-                <strong>{{ config.due_date }}</strong>!
+                <strong>{{ config.due_date.strftime("%b %-d @ %-I:%M %p") }}</strong>!
                 <br>
                 <br>
                 Built by Nicholas Padmanabhan '23, a co-creator of TigerSnatch. ProjectFinder was
@@ -36,7 +36,7 @@
                      role="alert">
                     <i class="bi bi-exclamation-triangle-fill me-1"></i>
                     Your final grade will be penalized if you fail to create an entry by
-                    {{ config.due_date }}!
+                    {{ config.due_date.strftime("%b %-d @ %-I:%M %p") }}!
                 </div>
             </div>
         </div>
