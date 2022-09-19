@@ -3,6 +3,7 @@ import sys
 
 from dotenv import load_dotenv
 import pytz
+import sqlalchemy as sa
 
 from emails import *
 from models import *
@@ -35,14 +36,18 @@ def send_overdue_email(test_email=None):
     due_date = timezone("US/Eastern").localize(config.due_date)
     diff = datetime.now(tz=pytz.timezone("US/Eastern")) - due_date
     if diff.days != 0:
+        print("Skipped sending overdue emails")
         return
 
-    users = User.query.filter(User.entry.isnot(None))
+    print("Sending overdue emails")
+
+    users = db.query(User).filter(User.entry == sa.null())
     for user in users:
         to.append(user.email)
 
     for i in range(0, len(to), BATCH_SIZE):
         batch_to = to[i : i + BATCH_SIZE]
+        print(f"Emailing {batch_to}")
         send_email(
             batch_to,
             message,
@@ -50,6 +55,7 @@ def send_overdue_email(test_email=None):
         )
 
     log_email(users, "overdue")
+    print("Sent overdue emails")
 
 
 def send_reminder_email(test_email=None):
@@ -70,7 +76,10 @@ def send_reminder_email(test_email=None):
     due_date = timezone("US/Eastern").localize(config.due_date)
     diff = due_date - datetime.now(tz=pytz.timezone("US/Eastern"))
     if diff.days != 1:
+        print("Skipped sending reminder emails")
         return
+
+    print("Sending reminder emails")
 
     users = User.query.all()
     for user in users:
@@ -86,6 +95,7 @@ def send_reminder_email(test_email=None):
         )
 
     log_email(users, "reminder")
+    print("Send reminder emails")
 
 
 if __name__ == "__main__":
