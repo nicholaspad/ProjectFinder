@@ -4,6 +4,7 @@ import re
 from dotenv import load_dotenv
 from flask import Flask, Response, render_template, request
 from flask_admin import Admin
+from flask_admin.menu import MenuLink
 from flask_migrate import Migrate
 from pytz import timezone
 
@@ -23,6 +24,8 @@ admin.add_view(AdminView(User, db))
 admin.add_view(AdminViewRestricted(Config, db))
 admin.add_view(AdminView(Entry, db))
 admin.add_view(AdminViewRestricted(EmailLog, db))
+
+admin.add_link(MenuLink(name="Live Website", category="", url="/"))
 
 Migrate(app, db)
 
