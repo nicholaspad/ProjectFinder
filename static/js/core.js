@@ -101,6 +101,7 @@ $(document).ready(() => {
   initEntryModalSaveButton();
   initEntryDeleteButton();
   initDataTable();
+  window.history.replaceState({}, document.title, "/");
 });
 
 /****************************************************************************/
