@@ -4,6 +4,7 @@ import re
 from dotenv import load_dotenv
 from flask import Flask, Response, render_template, request
 from flask_admin import Admin
+from flask_migrate import Migrate
 from pytz import timezone
 
 from CASClient import CASClient
@@ -22,6 +23,8 @@ admin.add_view(AdminView(User, db))
 admin.add_view(AdminView(Config, db))
 admin.add_view(AdminView(Entry, db))
 admin.add_view(AdminView(EmailLog, db))
+
+migrate = Migrate(app, db)
 
 
 @app.teardown_appcontext
