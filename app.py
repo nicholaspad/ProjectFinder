@@ -111,6 +111,7 @@ def create_or_update_entry():
     entry.project_description = project_description.strip()
 
     if not user.entry:
+        entry.user_id = user.id
         db.add(entry)
 
     db.commit()

@@ -50,3 +50,6 @@ class Entry(Base):
     interests = Column(String(500), nullable=False, default="")
     project_name = Column(String(100), nullable=False, default="")
     project_description = Column(String(500), nullable=False, default="")
+
+    def __repr__(self):
+        return f"<Entry user={self.user!r}>"
