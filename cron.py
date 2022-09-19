@@ -29,18 +29,15 @@ def send_overdue_email(test_email=None):
         )
         return
 
-    due_date = Config.objects.first().due_date
+    config = Config.query.first()
+    due_date = timezone("US/Eastern").localize(config.due_date)
     diff = datetime.now(tz=pytz.timezone("US/Eastern")) - due_date
     if diff.days != 0:
         return
 
-    users = User.objects.filter(~Q(username="admin"), entry__isnull=True)
+    users = User.query.filter(User.entry.isnot(None))
     for user in users:
-        if user.email:
-            to.append(user.email)
-            continue
-        netid = user.username.split("-")[-1]
-        to.append(f"{netid}@princeton.edu")
+        to.append(user.email)
 
     for i in range(0, len(to), BATCH_SIZE):
         send_email(
@@ -65,18 +62,15 @@ def send_reminder_email(test_email=None):
         )
         return
 
-    due_date = Config.objects.first().due_date
+    config = Config.query.first()
+    due_date = timezone("US/Eastern").localize(config.due_date)
     diff = due_date - datetime.now(tz=pytz.timezone("US/Eastern"))
     if diff.days != 1:
         return
 
-    users = User.objects.filter(~Q(username="admin"))
+    users = User.query.all()
     for user in users:
-        if user.email:
-            to.append(user.email)
-            continue
-        netid = user.username.split("-")[-1]
-        to.append(f"{netid}@princeton.edu")
+        to.append(user.email)
 
     for i in range(0, len(to), BATCH_SIZE):
         send_email(

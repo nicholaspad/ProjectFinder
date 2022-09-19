@@ -2,6 +2,7 @@ import os
 import smtplib
 import ssl
 
+from database import db
 from dotenv import load_dotenv
 import pytz
 
@@ -32,8 +33,9 @@ def send_email(to_email, message, sender_pw):
 
 def log_email(users, email_type):
     for user in users:
-        EmailLog(
-            user=user,
-            date=datetime.now(tz=pytz.timezone("US/Eastern")),
-            email_type=email_type,
-        ).save()
+        log = EmailLog()
+        log.user_id = user.id
+        log.email_type = email_type
+        db.add(log)
+
+    db.commit()
