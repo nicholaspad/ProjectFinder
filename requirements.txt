@@ -10,7 +10,7 @@ importlib-metadata==4.11.3
 importlib-resources==5.2.0
 itsdangerous==2.0.1
 Jinja2==3.0.3
-Mako==1.1.4
+Mako==1.2.2
 MarkupSafe==2.1.1
 pip==22.1.2
 psycopg2==2.8.6
