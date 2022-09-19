@@ -17,6 +17,11 @@ class AdminView(ModelView):
         return netid in self.ADMIN_NETIDS
 
 
+class AdminViewRestricted(AdminView):
+    can_create = False
+    can_delete = False
+
+
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
