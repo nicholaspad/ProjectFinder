@@ -8,6 +8,7 @@ from pytz import timezone
 from CASClient import CASClient
 from database import db
 from models import *
+from utils import *
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "abcdefg1234567"
@@ -74,14 +75,42 @@ def update_settings():
 
     if (
         not re.match(r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$", email)
-        or len(first_name) < 1
-        or len(last_name) < 1
+        or not first_name
+        or not last_name
     ):
         return Response(status=400)
 
     user.email = email
     user.first_name = first_name
     user.last_name = last_name
+
+    db.commit()
+    return Response(status=201)
+
+
+@app.route("/create-or-update-entry", methods=["POST"])
+def create_or_update_entry():
+    netid = CASClient().authenticate()
+    user = User.query.filter(User.netid == netid).first()
+    if user is None:
+        return Response(status=400)
+
+    skills = request.form.get("skills")
+    interests = request.form.get("interests")
+    project_name = request.form.get("projectName")
+    project_description = request.form.get("projectDescription")
+
+    if not skills or not interests or is_past_due():
+        return Response(status=400)
+
+    entry = user.entry if user.entry else Entry()
+    entry.skills = ", ".join(filter(None, [e.strip() for e in skills.split(",")]))
+    entry.interests = interests.strip()
+    entry.project_name = project_name.strip()
+    entry.project_description = project_description.strip()
+
+    if not user.entry:
+        db.add(entry)
 
     db.commit()
     return Response(status=201)
