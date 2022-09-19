@@ -24,7 +24,7 @@ admin.add_view(AdminView(Config, db))
 admin.add_view(AdminView(Entry, db))
 admin.add_view(AdminView(EmailLog, db))
 
-migrate = Migrate(app, db)
+Migrate(app, db)
 
 
 @app.teardown_appcontext
