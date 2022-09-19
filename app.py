@@ -1,5 +1,7 @@
+import os
 import re
 
+from dotenv import load_dotenv
 from flask import Flask, Response, render_template, request
 from flask_admin import Admin
 from pytz import timezone
@@ -9,8 +11,9 @@ from database import db
 from models import *
 from utils import *
 
+load_dotenv()
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "abcdefg1234567"
+app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 app.config["TIMEZONE"] = timezone("US/Eastern")
 app.config["FLASK_ADMIN_SWATCH"] = "cerulean"
 

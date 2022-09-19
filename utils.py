@@ -1,9 +1,14 @@
+import os
 import smtplib
 import ssl
 
+from dotenv import load_dotenv
 import pytz
 
 from models import *
+
+load_dotenv()
+EMAIL_ADDRESS = os.environ["EMAIL_ADDRESS"]
 
 
 def is_past_due():
@@ -16,7 +21,7 @@ def is_past_due():
 def send_email(to_email, message, sender_pw):
     port = 587
     smtp_server = "smtp-mail.outlook.com"
-    sender_email = EMAIL
+    sender_email = EMAIL_ADDRESS
 
     context = ssl.create_default_context()
     with smtplib.SMTP(smtp_server, port) as server:

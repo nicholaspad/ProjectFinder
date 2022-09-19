@@ -1,11 +1,14 @@
 from datetime import datetime
 
+from dotenv import load_dotenv
 import pytz
 
 from emails import *
 from models import *
 from utils import *
 
+load_dotenv()
+EMAIL_PW = os.environ["EMAIL_PW"]
 BATCH_SIZE = 50
 
 """
