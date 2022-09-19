@@ -1,11 +1,20 @@
 from datetime import datetime
-from email.policy import default
 
+from flask_admin.contrib.sqla import ModelView
 from pytz import timezone
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
+from CASClient import CASClient
 from database import Base
+
+
+class AdminView(ModelView):
+    ADMIN_NETIDS = set(["ntyp"])
+
+    def is_accessible(self):
+        netid = CASClient().authenticate()
+        return netid in self.ADMIN_NETIDS
 
 
 class User(Base):

@@ -2,7 +2,6 @@ import re
 
 from flask import Flask, Response, render_template, request
 from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 from pytz import timezone
 
 from CASClient import CASClient
@@ -16,9 +15,9 @@ app.config["TIMEZONE"] = timezone("US/Eastern")
 app.config["FLASK_ADMIN_SWATCH"] = "cerulean"
 
 admin = Admin(app, name="ProjectFinder", template_mode="bootstrap4")
-admin.add_view(ModelView(User, db))
-admin.add_view(ModelView(Config, db))
-admin.add_view(ModelView(Entry, db))
+admin.add_view(AdminView(User, db))
+admin.add_view(AdminView(Config, db))
+admin.add_view(AdminView(Entry, db))
 
 
 @app.teardown_appcontext
