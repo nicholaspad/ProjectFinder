@@ -52,4 +52,5 @@ class Entry(Base):
     project_description = Column(String(500), nullable=False, default="")
 
     def __repr__(self):
-        return f"<Entry user={self.user!r}>"
+        netid = self.user.netid if self.user else "Unknown"
+        return f"<Entry user={netid!r} project_name={self.project_name!r}>"
