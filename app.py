@@ -110,9 +110,25 @@ def create_or_update_entry():
     entry.project_name = project_name.strip()
     entry.project_description = project_description.strip()
 
-    if not user.entry:
+    if user.entry is None:
         entry.user_id = user.id
         db.add(entry)
+
+    db.commit()
+    return Response(status=201)
+
+
+@app.route("/delete-entry", methods=["POST"])
+def delete_entry():
+    netid = CASClient().authenticate()
+    user = User.query.filter(User.netid == netid).first()
+    if user is None:
+        return Response(status=400)
+
+    if user.entry is None:
+        return Response(status=201)
+
+    db.delete(user.entry)
 
     db.commit()
     return Response(status=201)
