@@ -57,6 +57,7 @@ def index():
         ),
         "has_created_entry": user.entry is not None,
         "table_data": table_data,
+        "is_past_due": is_past_due(),
     }
 
     return render_template("index.html", **context)
