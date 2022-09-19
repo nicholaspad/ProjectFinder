@@ -25,6 +25,7 @@ class User(Base):
     last_name = Column(String(50), default="", unique=False, nullable=True)
     email = Column(String(50), default="", unique=True)
     entry = relationship("Entry", backref="user", uselist=False)
+    email_log = relationship("EmailLog", backref="user")
 
     def __init__(self, netid):
         self.netid = netid
@@ -63,3 +64,13 @@ class Entry(Base):
     def __repr__(self):
         netid = self.user.netid if self.user else "Unknown"
         return f"<Entry user={netid!r} project_name={self.project_name!r}>"
+
+
+class EmailLog(Base):
+    __tablename__ = "email_logs"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    date = Column(
+        DateTime, nullable=False, default=datetime.now(tz=timezone("US/Eastern"))
+    )
+    email_type = Column(String(100), nullable=False)
