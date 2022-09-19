@@ -74,3 +74,7 @@ class EmailLog(Base):
         DateTime, nullable=False, default=datetime.now(tz=timezone("US/Eastern"))
     )
     email_type = Column(String(100), nullable=False)
+
+    def __repr__(self):
+        netid = self.user.netid if self.user else "Unknown"
+        return f"<EmailLog user={netid!r} email_type={self.email_type!r}>"
