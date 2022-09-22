@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="card text-center">
-    <div class="card-header">
-        COS333 | ProjectFinder
-    </div>
-    <div class="card-body">
-        <a href="/"
-           class="btn btn-primary">Login</a>
-    </div>
-    <div class="card-footer text-muted">
-        CAS authentication required
+<div class="d-flex flex-column min-vh-100 justify-content-center">
+    <div class="main-content-padding container-sm">
+        <div class="card text-center w-50 m-auto">
+            <div class="card-header fw-bolder">
+                COS333 | ProjectFinder
+            </div>
+            <div class="card-body">
+                <a href="/"
+                   class="btn btn-primary">Login</a>
+            </div>
+            <div class="card-footer text-muted">
+                CAS authentication required
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
