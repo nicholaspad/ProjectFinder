@@ -87,5 +87,4 @@ class CASClient:
         if "username" in session:
             session.pop("username")
 
-        # TODO: replace with landing page route
-        abort(redirect("/"))
+        abort(redirect("/landing"))
