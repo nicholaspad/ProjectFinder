@@ -10,7 +10,7 @@ from database import Base
 
 
 class AdminView(ModelView):
-    ADMIN_NETIDS = set(["ntyp"])
+    ADMIN_NETIDS = set(["ntyp", "rdondero"])
 
     def is_accessible(self):
         netid = CASClient().authenticate()
