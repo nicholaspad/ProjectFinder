@@ -84,7 +84,8 @@ class CASClient:
 
     def logout(self):
         # Delete the user's username from the session.
-        session.pop("username")
+        if "username" in session:
+            session.pop("username")
 
-        logout_url = self.cas_url + "logout"
-        abort(redirect(logout_url))
+        # TODO: replace with landing page route
+        abort(redirect("/"))
