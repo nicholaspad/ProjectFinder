@@ -10,11 +10,9 @@ from database import Base
 
 
 class AdminView(ModelView):
-    ADMIN_NETIDS = set(["ntyp", "rdondero"])
-
     def is_accessible(self):
         netid = CASClient().authenticate()
-        return netid in self.ADMIN_NETIDS
+        return User.query.filter(User.netid == netid).first().is_admin
 
 
 class AdminViewRestricted(AdminView):
