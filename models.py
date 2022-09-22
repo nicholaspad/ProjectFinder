@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask_admin.contrib.sqla import ModelView
 from pytz import timezone
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from CASClient import CASClient
@@ -31,6 +31,7 @@ class User(Base):
     email = Column(String(50), default="", unique=True)
     entry = relationship("Entry", backref="user", uselist=False)
     email_log = relationship("EmailLog", backref="user")
+    is_admin = Column(Boolean, default=False, unique=False, nullable=True)
 
     def __init__(self, netid):
         self.netid = netid
