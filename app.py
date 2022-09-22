@@ -35,6 +35,11 @@ def shutdown_session(exception=None):
     db.remove()
 
 
+@app.route("/landing", methods=["GET"])
+def landing():
+    return render_template("landing.html")
+
+
 @app.route("/", methods=["GET"])
 def index():
     netid = CASClient().authenticate()
